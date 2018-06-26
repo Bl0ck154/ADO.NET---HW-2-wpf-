@@ -1,0 +1,52 @@
+﻿<Window x:Class="ADO.NET___HW_2.UserEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ADO.NET___HW_2"
+        mc:Ignorable="d"
+        Title="UserEdit" Height="300" Width="400">
+	<Window.Resources>
+		<Style x:Key="mainStyle" TargetType="FrameworkElement">
+			<Setter Property="Margin" Value="5 10 5 5" />
+		</Style>
+		<Style TargetType="TextBlock" BasedOn="{StaticResource mainStyle}">
+			<Setter Property="FontSize" Value="16" />
+		</Style>
+		<Style TargetType="TextBox" BasedOn="{StaticResource mainStyle}">
+			<Setter Property="FontSize" Value="16" />
+		</Style>
+		<Style TargetType="CheckBox" BasedOn="{StaticResource mainStyle}">
+			<Setter Property="FontSize" Value="16" />
+		</Style>
+		<Style TargetType="PasswordBox" BasedOn="{StaticResource mainStyle}">
+			<Setter Property="FontSize" Value="16" />
+		</Style>
+	</Window.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition></RowDefinition>
+			<RowDefinition></RowDefinition>
+			<RowDefinition></RowDefinition>
+			<RowDefinition></RowDefinition>
+			<RowDefinition></RowDefinition>
+			<RowDefinition></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition></ColumnDefinition>
+			<ColumnDefinition Width="3*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<TextBlock>Login : *</TextBlock>
+		<TextBlock Grid.Row="1">Password : *</TextBlock>
+		<TextBlock Grid.Row="2">Address :</TextBlock>
+		<TextBlock Grid.Row="3">Phone :</TextBlock>
+		<CheckBox Grid.Row="4" Name="AdminFlag" HorizontalAlignment="Center">Admin</CheckBox>
+
+		<TextBox Name="LoginTextbox" Grid.Column="1" Grid.Row="0" TextChanged="LoginTextbox_TextChanged"></TextBox>
+		<PasswordBox Name="PasswordTextbox" Grid.Column="1" Grid.Row="1" PasswordChanged="LoginTextbox_TextChanged"></PasswordBox>
+		<TextBox Name="AddressTextbox" Grid.Column="1" Grid.Row="2"></TextBox>
+		<TextBox Name="PhoneTextbox" Grid.Column="1" Grid.Row="3"></TextBox>
+
+		<Button Grid.Row="5" Grid.ColumnSpan="2" Name="CreateButton" IsEnabled="False" Click="CreateButton_Click">Create user</Button>
+	</Grid>
+</Window>
