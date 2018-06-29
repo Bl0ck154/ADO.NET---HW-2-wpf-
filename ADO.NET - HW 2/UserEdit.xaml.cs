@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -21,39 +22,48 @@ namespace ADO.NET___HW_2
 	/// </summary>
 	public partial class UserEdit : Window
 	{
-		public UserEdit()
+		DataTable dataTable;
+		int editIndex = -1;
+		public UserEdit(DataTable dt)
 		{
 			InitializeComponent();
 			WindowStartupLocation = WindowStartupLocation.CenterScreen;
+			dataTable = dt;
 		}
-		//public UserEdit(/*params*/) 
-		//{
-
-		//}
+		public UserEdit(DataTable dt, int selectedIndex) : this(dt)
+		{
+			LoginTextbox.Text = dataTable.Rows[selectedIndex][1].ToString();
+			PasswordTextbox.Password = dataTable.Rows[selectedIndex][2].ToString();
+			AddressTextbox.Text = dataTable.Rows[selectedIndex][3].ToString();
+			PhoneTextbox.Text = dataTable.Rows[selectedIndex][4].ToString();
+			AdminFlag.IsChecked = (bool)dataTable.Rows[selectedIndex][5];
+			editIndex = selectedIndex;
+			if (editIndex != -1)
+				CreateButton.Content = "Update user";
+		}
 
 		private void CreateButton_Click(object sender, RoutedEventArgs e)
 		{
-			try
+			if(editIndex == -1 && dataTable.AsEnumerable().Where(field => field.ItemArray[1].ToString().ToLower() == LoginTextbox.Text.ToLower()).Count() > 0)
 			{
-				using (SqlConnection sqlConnection =
-					new SqlConnection(ConfigurationManager.ConnectionStrings["mainConnect"].ConnectionString))
-				{
-					sqlConnection.Open();
-					SqlCommand command = new SqlCommand(@"insert into Users VALUES (@login, @password, @address, @phone, " +
-						(AdminFlag.IsChecked == true ? "1)" : "0)"), sqlConnection);
-					command.Parameters.AddWithValue("@login", LoginTextbox.Text);
-					command.Parameters.AddWithValue("@password", PasswordTextbox.Password.GetHashCode());
-					command.Parameters.AddWithValue("@address", AddressTextbox.Text);
-					command.Parameters.AddWithValue("@phone", PhoneTextbox.Text);
-					command.ExecuteNonQuery();
-					DialogResult = true;
-					Close();
-				}
+				MessageBox.Show("User already exists!");
+				return;
 			}
-			catch (Exception ex)
+
+			DataRow dr = (editIndex > -1) ? dataTable.Rows[editIndex] : dataTable.NewRow();
+			dr[1] = LoginTextbox.Text;
+			dr[2] = PasswordTextbox.Password.GetHashCode();
+			dr[3] = AddressTextbox.Text;
+			dr[4] = PhoneTextbox.Text;
+			dr[5] = AdminFlag.IsChecked;
+			if (editIndex == -1)
 			{
-				MessageBox.Show(ex.Message);
+				dr[0] = int.Parse(dataTable.Rows[dataTable.Rows.Count-1][0].ToString()) + 1;
+				dataTable.Rows.Add(dr);
 			}
+
+			DialogResult = true;
+			Close();
 		}
 
 		private void LoginTextbox_TextChanged(object sender, RoutedEventArgs e)

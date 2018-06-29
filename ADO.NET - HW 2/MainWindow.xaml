@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ADO.NET___HW_2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="600">
-    <Grid>
+        Title="Users list" Height="600" Width="600">
+	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition></RowDefinition>
+			<RowDefinition Height="0.1*"></RowDefinition>
 			<RowDefinition></RowDefinition>
 			<RowDefinition Height="0.3*"></RowDefinition>
 		</Grid.RowDefinitions>
@@ -16,7 +16,51 @@
 			<ColumnDefinition></ColumnDefinition>
 			<ColumnDefinition></ColumnDefinition>
 		</Grid.ColumnDefinitions>
-		<ListBox Grid.ColumnSpan="2" Grid.RowSpan="2" Name="UsersListbox" SelectionChanged="UsersListbox_SelectionChanged">
+		<Grid Grid.ColumnSpan="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="0.25*"></ColumnDefinition>
+				<ColumnDefinition></ColumnDefinition>
+				<ColumnDefinition></ColumnDefinition>
+				<ColumnDefinition></ColumnDefinition>
+				<ColumnDefinition></ColumnDefinition>
+				<ColumnDefinition Width="0.4*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Button Name="ColName1" Grid.Column="0" IsEnabled="False" Content="{Binding Path=duplo}"></Button>
+			<Button Name="ColName2" Grid.Column="1" IsEnabled="False"></Button>
+			<Button Name="ColName3" Grid.Column="2" IsEnabled="False"></Button>
+			<Button Name="ColName4" Grid.Column="3" IsEnabled="False"></Button>
+			<Button Name="ColName5" Grid.Column="4" IsEnabled="False"></Button>
+			<Button Name="ColName6" Grid.Column="5" Click="OnlyAdminsButton_Click"></Button>
+		</Grid>
+		<ListBox Grid.Row="1" ItemsSource="{Binding Tables[0]}" Grid.ColumnSpan="2" Grid.RowSpan="2"
+				 Name="UsersListbox" SelectionChanged="UsersListbox_SelectionChanged">
+			<ListBox.ItemContainerStyle>
+				<Style TargetType="ListBoxItem">
+					<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+					<Setter Property="FontSize" Value="16"/>
+					<EventSetter Event="MouseDoubleClick" Handler="UsersListbox_MouseDoubleClick"></EventSetter>
+				</Style>
+			</ListBox.ItemContainerStyle>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="5">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="0.25*"></ColumnDefinition>
+							<ColumnDefinition></ColumnDefinition>
+							<ColumnDefinition></ColumnDefinition>
+							<ColumnDefinition></ColumnDefinition>
+							<ColumnDefinition></ColumnDefinition>
+							<ColumnDefinition Width="0.25*"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock FontSize="16" Text="{Binding id}"  />
+						<TextBlock Grid.Column="1" Text="{Binding login}" />
+						<TextBlock Grid.Column="2" Text="{Binding password}" />
+						<TextBlock Grid.Column="3" Text="{Binding address}" />
+						<TextBlock Grid.Column="4" Text="{Binding phone}" />
+						<TextBlock Grid.Column="5" Text="{Binding admin}" />
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
 		</ListBox>
 		<Button Grid.Row="2" Grid.Column="0" Click="CreateButton_Click">Create user</Button>
 		<Button Grid.Row="2" Grid.Column="1" Click="RemoveButton_Click" Name="RemoveButton" IsEnabled="False">Remove user</Button>

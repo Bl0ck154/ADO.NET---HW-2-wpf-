@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ADO.NET___HW_2"
         mc:Ignorable="d"
-        Title="UserEdit" Height="300" Width="400">
+        Title="User Edit" Height="300" Width="400">
 	<Window.Resources>
 		<Style x:Key="mainStyle" TargetType="FrameworkElement">
 			<Setter Property="Margin" Value="5 10 5 5" />
